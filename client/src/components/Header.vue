@@ -1,15 +1,15 @@
 <template>
     <header class="header">
-    <div class="header__center">
-      <img src="../assets/img/escudo.png.gif" alt="logo" class="header__logo"/>
-      <div class="header__titles">
-        <h4>UNEFA</h4>
-        <h3>
+      <div class="header__center">
+        <img src="../assets/img/escudo.png.gif" alt="logo" class="header__logo"/>
+        <div class="header__titles">
+          <h4>UNEFA</h4>
+          <h3>
           Universidad Nacional Experimental Politécnica de la fuerzas Armadas
           Nacional
-        </h3>
-        <h2>Sistema de Control de la Oferta Académica</h2>
-      </div>
+          </h3>
+          <h2>Sistema de Control de la Oferta Académica</h2>
+        </div>
     </div>
       <div class="contenedor__fecha">
         <p class="p__hora">{{Ihora}} : {{Iminutos}} : {{Isegundos}}</p>

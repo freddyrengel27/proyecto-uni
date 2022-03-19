@@ -17,7 +17,6 @@
         <input type="submit" value="Entrar" class="btn btn-primary" @click="login()"/>
     </form>
     <button class="btn btn-success" @click="showModal = !showModal">Regístrarse</button>
-    <button class="btn btn-info btn__recuperacion">Recupecion de contraseña</button>
 </div>
 
 <div class="modal__contenedor" v-if="showModal">
