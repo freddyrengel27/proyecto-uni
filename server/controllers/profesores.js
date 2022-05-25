@@ -2,6 +2,7 @@
 import validator from "validator";
 
 import conn from "../db/database.js";
+import historial from "./history.js";
 
 const controllersProfesores = {
 
@@ -36,6 +37,8 @@ const controllersProfesores = {
             let query = "INSERT INTO profesores(documento, nombre, apellido, email, telefono, materia_asignada) VALUE(?, ?, ?, ?, ?, ?)";
             conn.query(query, [documento, nombre, apellido, email, telefono, materias], (err) =>{
                 if(err) throw err;
+
+                historial(req.userInfo.id, `Registro al docente ${nombre} ${apellido}`);
                 return res.status(200).send({
                     message: "Registro exitoso"
                 })

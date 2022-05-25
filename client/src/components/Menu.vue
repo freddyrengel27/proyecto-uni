@@ -1,6 +1,7 @@
 <template>
-<div class="nav__bur">
-    <div class="nav__img" @click="showMenu = !showMenu">
+<div>
+<div class="nav__bur" >
+    <div class="nav__img" v-if="!showMenu" @click="showMenu = !showMenu" >
         <img src="../assets/img/menu.png">
     </div>
 </div >
@@ -19,10 +20,13 @@
                     <li class="menu__li"><router-link to="/pensum" active-class="menuActive" class="nav-iten"><span class="icon-iten"><img src="../assets/img/materia.png"></span>Pensum academico</router-link></li>
                     <li class="menu__li"><router-link to="/registro-profesores" active-class="menuActive" class="nav-iten"><span class="icon-iten"><img src="../assets/img/profesores.png"></span>Registro de profesores</router-link></li>
                     <li class="menu__li"><router-link to="/horarios" active-class="menuActive" class="nav-iten"><span class="icon-iten"><img src="../assets/img/horario.png"></span>Horarios</router-link></li>
+                    <li class="menu__li"><router-link to="/historial" active-class="menuActive" class="nav-iten"><span class="icon-iten"><img src="../assets/img/horario.png"></span>Bitácora</router-link></li>
+                    <li class="menu__li"><router-link to="/respaldo" active-class="menuActive" class="nav-iten"><span class="icon-iten"><img src="../assets/img/horario.png"></span>Respaldo</router-link></li>
                     <li class="menu__li"><a @click="exit" class="nav-iten"><span class="icon-iten"><img src="../assets/img/exit.png"></span>Salir</a></li>
                 </ul>
         </nav>
     </transition>
+</div>
 </div>
 </template>
 

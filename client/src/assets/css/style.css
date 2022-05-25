@@ -23,16 +23,15 @@
 
 .header__center{
     display: flex;
-    width: 70%;
+    width: 75%;
     height: 100%;
 }
 
 .header__logo{
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    margin-top: 20px;
-    margin-left: 80px;
+    position: relative;
+    width: 133px;
+    height: 125px;
+    margin: auto 15px;
 }
 
 .header__titles{
@@ -40,23 +39,29 @@
     flex-direction: column;
     width: 100%;
     height: 100%;
-    align-items: center;
-    margin-top: 20px;
 }
 
 .header__titles h4{
-  font-family: Georgia,
+  font-family: fantasy,;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 10px;
 }
 
 .header__titles h3{
-    font-size: 22px;
-    color: #000;
+    font-size: 21px;
+    color: rgba(0, 0, 0, 0.7);
     margin: auto;
-    z-index: 30;
+    font-family: fantasy;
+    font-weight: 500;
+    margin-top: -10px;
 }
 
 .header__titles h2{
-    z-index: 30;
+    font-size: 20px;
+    font-family: fantasy;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.7);
 }
 
 .header__titles img{
@@ -72,20 +77,26 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 30%;
+  width: 15%;
   height: 50px;
-  background: red;
-  margin-top: 15px;
+  background: rgba(222, 227, 228, 0.7);
+  margin: auto;
+  border-radius: 5px;
+
 }
 
 .p__hora{
   margin-top: 10px;
   font-size: 18px;
+  font-family: fantasy;
+  color: rgba(73, 65, 65, 0.6);
 }
 
 .p__fecha{
   margin-top: -20px;
   font-size: 18px;
+  font-family: fantasy;
+  color: rgba(83, 70, 70, 0.6);
 }
 
 /*Footer*/
@@ -94,7 +105,7 @@
     display: flex;
     width: 100%;
     height: 38px;
-    background: rgb(216, 215, 105);
+    background: rgb(229, 227, 227);
   }
   
   .footer p{
@@ -438,6 +449,7 @@
   width: 20px;
   height: 20px;
   margin: auto 0;
+  margin-left: 430px;
 }
 
 .user__logo img{
@@ -493,15 +505,63 @@
 
   /* Home */
 
-.contenedor__carrucel{
-  width: 70%;
-  height: 50%;
-  margin: auto;
-  background: rgba(255, 255, 255, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.bienvendida{
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  margin: 10px auto;
+}
 
+.contenedor__inicio{
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+.contenedor__inicio h4{
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 5px auto;
+}
+
+.contenedor__targeta{
+  width: 100%;
+  height: 90%;
+  display: flex;
+  justify-content: center;
+}
+
+.targeta__inicio{
+  width: 150px;
+  height: 150px;
+  margin-left: 10px;
+  margin-top: 15px;
+  border: solid 3px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.targeta__inicio img{
+  display: block;
+  width: 100px;
+  height: 70%;
+  margin: auto;
+}
+
+.targeta__titulo{
+  display: flex;
+  width: 100%;
+  height: 30%;
+}
+
+.targeta__titulo span{
+  font-family: fantasy;
+  font-weight: 500;
+  font-size: 14px;
+  margin: auto;
 }
 
 
@@ -740,37 +800,21 @@
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   border: solid 1px #000;
 }
 
-.horario__item{
-  width: 50%;
-  height: 100%;
+.contenedor__horario__item{
+  width: 100%;
+  height: 40px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
 }
+
 
 .horario__item__diseño{
-  background: rgb(227, 252, 62);
-  border: solid 1px #000;
+  margin: auto;
 }
 
-.horario__item__diseño:hover{
-  background: rgb(180, 205, 17);
-  color: rgb(235, 232, 232);
-}
-
-.horario__item__visual{
-  background: rgb(70, 222, 225);
-  border: solid 1px #000;
-}
-
-.horario__item__visual:hover{
-  background: rgb(16, 181, 184);
-  color: rgb(235, 232, 232);
-}
 
 .contenedor__form__horario{
   width: 400px;
@@ -797,9 +841,54 @@
   margin-top: 20px;
 }
 
+.contendor__targetHorario{
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
 
+.targeta__horario{
+  width: 150px;
+  height: 165px;
+  background: rgb(219, 214, 214);
+  display: flex;
+  flex-direction: column;
+  margin: 20px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
 
+.horariotaegeta__img{
+  width: 90%;
+  height: 60%;
+  background: #fff;
+  border-radius: 10px;
+  margin: 10px auto;
+  display: flex;
 
+}
+
+.horariotaegeta__img img{
+  width: 90%;
+  height: 90%;
+  margin: auto;
+}
+
+.targeta__horarioTitu{
+  width: 100%;
+  height: 20%;
+  display: flex;
+}
+
+.targeta__horarioTitu span{
+  margin: auto;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.targeta__horario:hover{
+  box-shadow: -2px 7px 41px 12px rgba(0, 0, 0, 0.69);
+}
 
   .espacio{
     width: 90%;
@@ -900,36 +989,69 @@
     padding-left: 20px;
   }
   
+/* HISTORIAL */
 
-  
+.titulo__H{
+  margin: 5px auto;
+}
+
+.contenedor__tablasR{
+  width: 97%;
+  height: 95%;
+  overflow-y: auto;
+  margin: auto;
+}  
+
+/* RESPALDO */
+
+.contenedor__btnRespaldo{
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.respaldo__targeta{
+  width: 300px;
+  height: 200px;
+  background: rgba(222, 227, 228, 0.9);
+  margin: auto;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.respaldo__targeta:hover{
+  box-shadow: 0px 0px 21px 3px rgba(0,0,0,0.75);
+}
+
+.respaldo__img{
+  width: 100%;
+  height: 80%;
+  display: flex
+}
+
+.respaldo__img img{
+  width: 100px;
+  height: 100px;
+  margin: auto;
+}
+
+.respaldo__targeta h4{
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  color: rgb(0, 0, 0);
+  margin: auto
+}
+
+
 
   @media (max-width:900px){
 
     /* HEADER */
 
     .header{
-      height: 142px;
-    }
-  
-    .header__logo{
-      width: 70px;
-      height: 70px;
-    }
-  
-    .header__titles h3{
-      font-size: 15px;
-    }
-  
-    .header__titles h2{
-      font-size: 17px;
-    }
-  
-    .header__titles img{
-      position: absolute;
-      width: 100px;
-      height: 80px;
-      margin-top: 6px;
-  
+      height: 125px;
     }
   
     /*LOGIN*/

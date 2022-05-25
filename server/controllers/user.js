@@ -4,6 +4,7 @@ import bcrypt from "bcrypt-nodejs";
 import jwt from "jwt-simple";
 import conn from "../db/database.js";
 import createToken from "../jwt/createToken.js";
+import historial from "./history.js";
 
 
 const controllersUser = {
@@ -101,7 +102,8 @@ const controllersUser = {
             bcrypt.compare(password, infoUser.password, (err, check) =>{
                 if(err) throw err;
                 if(check){ 
-                    console.log("hola")
+        
+                    historial(infoUser.id_usuario, "Inicio sesión de usuario")
                     return res.status(200).send({
                         type: "nice",
                         message: "login",

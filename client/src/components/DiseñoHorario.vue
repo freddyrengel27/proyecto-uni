@@ -4,7 +4,6 @@
     <form class="form__horario" @submit.prevent>
         <h4>Diseño de Horarios</h4>
         <div class="contendor-input">
-            <label  class="form-label">Titulo</label>
             <input type="text" class="form-control"  aria-describedby="emailHelp" v-model="dataHorario.titulo">
         </div>
         <div class="contendor-input">
@@ -520,7 +519,7 @@
                 </div>
             </div>
             <div >
-            <button class="btn btn-success" @click="createPDF()">Registrar</button>
+            <button class="btn btn-success" @click="setRegistrar">Registrar</button>
             <button class="btn btn-danger" @click="$emit('backMenu')">Cancelar</button>
             </div>
 
@@ -534,24 +533,28 @@
 
 <script>
 import { computed, onBeforeMount, reactive, ref } from '@vue/runtime-core'
-import {getCarerras, getMaterias, getProfesores} from "../tools/request-axios.js"
+import {getCarerras, getMaterias, getProfesores, global} from "../tools/request-axios.js"
 import socket from "../socket/socket.js";
 import {jsPDF} from "jspdf";
 import html2canvas from "html2canvas";
 import generadorPDF from "../tools/generadorPdf.js"
+import axios from "axios";
+import {useStore} from "vuex"
+import reducePDF from "../tools/reducerPdf.js";
 
 export default {
     name: "DiseñoHorario",
     setup(){
+        const store = useStore();
         const dataHorario = reactive({
-            titulo:"",
+            titulo: "",
             cod_carrera:"",
             carrera: "",
             semestre: 1,
             turno:"",
         });
-        const horario = ref(null)
-        const showDiseño = ref(false)
+        const horario = ref(null);
+        const showDiseño = ref(false);
         const carreras = ref([]);
         const materias = ref([]);
         const profesores = ref([]);
@@ -561,12 +564,12 @@ export default {
 
         onBeforeMount( async () =>{
             carreras.value = await getCarerras()
-        })
+        });
 
         const setCarrera = () =>{
                 let carrera = carreras.value.filter(carrera => carrera.id_carrera == dataHorario.cod_carrera)
                 dataHorario.carrera = carrera[0].carrera   
-        }
+        };
 
         const nextHorario = async () =>{
             const mate = await getMaterias(dataHorario.cod_carrera)
@@ -596,7 +599,7 @@ export default {
             e.dataTransfer.dropEffect = "move"
             e.dataTransfer.effectAllowed = "move"
             e.dataTransfer.setData("itemID", iten.codigo)
-         }
+         };
 
         const getMateriasHorarios = (id) =>{
             const mate = materiasHorario.value.filter(mat => mat.horario == id)
@@ -607,7 +610,7 @@ export default {
                 }
             }
                 
-        }
+        };
 
         const onDrop = (e, id) =>{
             let mate = e.dataTransfer.getData("itemID");
@@ -616,8 +619,7 @@ export default {
             clone.horario = id
             socket.emit("verificacion", clone);
             targetMateria.value = clone;
-            console.log(targetMateria.value)
-        }
+        };
 
         socket.on("resVerificacion", data =>{
             if(data.length < 1){
@@ -630,13 +632,13 @@ export default {
                     removeItemMateria()
                 }
             }
-        })
+        });
 
         const removeItemMateria = () =>{
             let removeMateria = materiasDrag.value.find(mat => mat.codigo == targetMateria.value.codigo);
             materiasDrag.value.pop(removeMateria)
             materiasHorario.value.push(targetMateria.value)
-        }
+        };
         
         const createPDF = () =>{
             const doc = generadorPDF()
@@ -651,10 +653,39 @@ export default {
                 let pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
                 let pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
+                
                 doc.addImage(img,"JPEG", bufferX, bufferY, pdfWidth, pdfHeight, undefined, "FAST")
-                doc.output('dataurlnewwindow',"horario.pdf");
+
+                doc.setFontSize(11).text("Horario diseñado por " + store.state.user.nombre + " " + store.state.user.apellido, 50, 165)
+               
+               doc.setFontSize(8).text("Pagina 1 de 1", 150, 300, "center")
+
+               const dataurl = doc.output("blob");
+
+               const archivo = new FormData();
+               archivo.append("dataHorario", dataurl, "horario.pdf")
+                archivo.append("titulo", dataHorario.titulo)
+                archivo.append("carrera", dataHorario.cod_carrera)
+                archivo.append("semestre", dataHorario.semestre);
+            
+                axios.post(global + "sabehorario", archivo)
+                .then(res => console.log(res))
+               
             }) 
             
+        };
+
+        const setRegistrar = async () =>{
+            
+            const data = {
+                info: dataHorario,
+                horario: materiasHorario.value 
+            };
+
+            const res = await axios.post(global + "addhorario", data);
+
+           await createPDF();
+           
         };
         
 
@@ -670,7 +701,8 @@ export default {
             getMateriasHorarios,
             onDrop,
             createPDF,
-            horario
+            horario,
+            setRegistrar
         }
     }
 }
