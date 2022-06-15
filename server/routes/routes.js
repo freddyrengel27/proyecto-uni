@@ -40,7 +40,7 @@ router.post("/sabehorario", upload.single("dataHorario"), controllersUrlHorario.
 router.get("/geturlhorario", authentication, controllersUrlHorario.get);
 router.post("/descarga", controllersUrlHorario.PDFdownload)
 
-router.get("/getbitacora", bitacora);
+router.get("/getbitacora/:fechas", bitacora);
 
 // RESPALDO
 

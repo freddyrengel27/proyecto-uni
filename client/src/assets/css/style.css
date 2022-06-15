@@ -1011,14 +1011,21 @@
 }
 
 .respaldo__targeta{
-  width: 300px;
+  width: 350px;
   height: 200px;
   background: rgba(222, 227, 228, 0.9);
   margin: auto;
   border-radius: 10px;
   display: flex;
-  flex-direction: column;
-  cursor: pointer;
+  flex-direction: column;  
+}
+
+.dropFile{
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #000;
+  transition: .3s ease all;
+  position: relative;
 }
 
 .respaldo__targeta:hover{
@@ -1044,7 +1051,76 @@
   margin: auto
 }
 
+.dropFile span{
+  font-size: 19px;
+  font-weight: 800;
+}
 
+.dropFile label{
+  color: #fff;
+  background: #41b883;
+  padding: 8px 12px;
+  transition: 0.3s ease all;
+}
+
+.dropFile input{
+  display: none;
+}
+
+
+.nombreArchivo{
+  font-size: 18px;
+  font-weight: 750;
+  color: green;
+  position: absolute;
+  bottom: 0;
+  margin: auto 0;
+}
+
+.activeFile{
+  background: #41b883;
+}
+
+.activeFile  label{
+  background: #fff;
+  color: #083086;
+}
+
+.contenedor_selectFecha h4{
+  margin: 5px auto;
+  font-weight: 700;
+}
+
+
+
+.contenedor_selectFecha{
+  width: 320px;
+  height: 280px;
+  display: flex;
+  flex-direction: column;
+  background: rgba(222, 227, 228, 0.7);
+  margin: 20px auto;
+  border-radius: 15px;
+
+}
+
+.caja_fecha{
+  width: 100%;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.caja_fecha span{
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.botonFecha{
+  margin-top: 30px;
+}
 
   @media (max-width:900px){
 

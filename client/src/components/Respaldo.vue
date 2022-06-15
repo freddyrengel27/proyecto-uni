@@ -14,13 +14,8 @@
                 </div>
                 <h4>Generar respaldo</h4>
             </div>
-            <div class="respaldo__targeta">
-                <div class="respaldo__img">
-                    <img src="../assets/img/subida.png">
-                </div>
-                <h4>Subir respaldo</h4>
-            </div>
-
+            
+            <DropFile />
 
         </div>
         
@@ -34,14 +29,19 @@ import Menu from "./Menu.vue";
 import NavUser from "./NavUser.vue";
 import {global} from "../tools/request-axios.js"
 import axios from 'axios';
+import DropFile from "./DropFile.vue"
+import {ref} from "vue"
 export default {
     name: "Respaldo",
     components:{
         Menu,
-        NavUser
+        NavUser,
+        DropFile
     },
     setup(){
-
+       
+        
+      
 
         const getREspaldo = async () =>{
 
@@ -61,7 +61,8 @@ export default {
         };
 
         return{
-            getREspaldo
+            getREspaldo,
+            
         }
     }
 

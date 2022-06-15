@@ -7,25 +7,41 @@
         <NavUser></NavUser>
 
         <h4 class="titulo__H">Bitácora</h4>
-        <div class="contenedor__tablasR">
+
+        <div class="contenedor_selectFecha" v-if="!showBitacora">
+            <h4>Selecciona las fechas</h4>
+            <div class="caja_fecha">
+                <span>Desde</span>
+                <Datepicker v-model="datePicketOld" />
+            </div>
+            <div class="caja_fecha">
+                <span>Hasta</span>
+                <Datepicker v-model="datePicketAct" />
+            </div>
+
+            <button class="btn btn-primary botonFecha" @click="getHistoria">Ver</button>
+        </div>
+
+        <div class="contenedor__tablasR" v-else>
             <table class="table">
-                <thead>
-                    <tr>
-                    <th scope="col">Usuario</th>
-                    <th scope="col">Acción</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Hora</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="bi of bitacora" :key="bi.id_historia">
-                    <th scope="row">{{bi.nombre_usuario}} {{bi.apellido_usuario}}</th>
-                    <td>{{bi.accion}}</td>
-                    <td>{{formate(bi.fecha)}}</td>
-                    <td>{{bi.hora}}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <thead class="tablaP">
+        <tr>
+        <th scope="col">Usuario</th>
+        <th scope="col">Acción</th>
+        <th scope="col">fecha</th>
+        <th scope="col">hora</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="bitacora in bitacora" :key="bitacora.id_historia">
+        <th scope="row">{{bitacora.nombre_usuario}} {{bitacora.apellido_usuario}}</th>
+        <td>{{bitacora.accion}}</td>
+        <td>{{formate(bitacora.fecha)}}</td>
+        <td>{{bitacora.hora}}</td>
+        </tr>
+        </tbody>
+        </table>
+        <button class="btn btn-danger" @click="() => showBitacora = false">Regresar</button>
         </div>
      </div>
     </main>
@@ -36,34 +52,46 @@
 import { ref } from '@vue/reactivity';
 import Menu from "./Menu.vue";
 import NavUser from "./NavUser.vue";
-import { onBeforeMount } from '@vue/runtime-core';
 import axios from 'axios';
 import {global} from "../tools/request-axios.js";
 import moment from "moment";
+import Datepicker from "vue3-datepicker";
 
 export default {
     name: "Historial",
     components:{
         Menu,
-        NavUser
+        NavUser,
+        Datepicker
     },
     setup(){
         const bitacora = ref([]);
+        const showBitacora = ref(false);
 
-        onBeforeMount(async () =>{
-
-            const res = await axios.get(global + "getbitacora");
-            bitacora.value = res.data.bitacora;
-        });
+        const datePicketOld = ref(new Date());
+        const datePicketAct = ref(new Date());
 
         const formate = (date) =>{
             return moment(date).format("YYYY-MM-DD")
         }
 
+        const getHistoria = async () =>{
+         
+            const fechaOld = moment(datePicketOld.value).format("YYYY-MM-DD");
+            const fechaAct = moment(datePicketAct.value).format("YYYY-MM-DD");
+            
+            const {data} = await axios.get(`${global}/getbitacora/${fechaOld}:${fechaAct}`);
+            bitacora.value = data.bitacora;
+            showBitacora.value = true;
+        };
         
 
         return{
             bitacora,
+            showBitacora,
+            datePicketOld,
+            datePicketAct,
+            getHistoria,
             formate
         }
     }
