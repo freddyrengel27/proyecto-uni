@@ -10,7 +10,8 @@
 
         <div class="contenedor_selectFecha" v-if="!showBitacora">
             <h4>Selecciona las fechas</h4>
-            <div class="caja_fecha">
+            <div class="caja__calendario">
+                <div class="caja_fecha">
                 <span>Desde</span>
                 <Datepicker v-model="datePicketOld" />
             </div>
@@ -18,7 +19,8 @@
                 <span>Hasta</span>
                 <Datepicker v-model="datePicketAct" />
             </div>
-
+            </div>
+            
             <button class="btn btn-primary botonFecha" @click="getHistoria">Ver</button>
         </div>
 

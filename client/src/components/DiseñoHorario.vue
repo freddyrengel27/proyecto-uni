@@ -561,6 +561,7 @@ export default {
         const materiasDrag = ref([]);
         const materiasHorario = ref([]);
         const targetMateria = ref([]);
+        const profesoresVista = ref([]);
 
         onBeforeMount( async () =>{
             carreras.value = await getCarerras()
@@ -580,7 +581,7 @@ export default {
                 for(var j in prof[i].materia_asignada.split(",")){
                     for(var k in materias.value){
                         if(prof[i].materia_asignada.split(",")[j] == materias.value[k].cod_materia){
-                            profesores.value.push({documento: prof[i].documento, codigo: materias.value[k].cod_materia, materia: materias.value[k].asignatura, horas: materias.value[k].horas_materias, idM:"", horario: ""})
+                            profesores.value.push({documento: prof[i].documento, nombre: `${prof[i].nombre} ${prof[i].apellido}`, correo: prof[i].email,  codigo: materias.value[k].cod_materia, materia: materias.value[k].asignatura, horas: materias.value[k].horas_materias, idM:"", horario: ""})
                         }
                     }
                 }
@@ -656,37 +657,64 @@ export default {
                 
                 doc.addImage(img,"JPEG", bufferX, bufferY, pdfWidth, pdfHeight, undefined, "FAST")
 
-                doc.setFontSize(11).text("Horario diseñado por " + store.state.user.nombre + " " + store.state.user.apellido, 50, 165)
+                doc.setFontSize(10).text("Horario diseñado por " + store.state.user.nombre + " " + store.state.user.apellido, 50, 165)
                
-               doc.setFontSize(8).text("Pagina 1 de 1", 150, 300, "center")
+                        doc.line(18, 170, 193, 170, "F");
+                let posicionY = 175;
+                profesoresVista.value.map(ele =>{  
+                         doc.setFontSize(10).text(ele.codigo, 21, posicionY);
+                         doc.setFontSize(10).text(ele.materia, 43, posicionY);
+                         doc.setFontSize(11).text(ele.nombre, 111, posicionY);
+                         doc.setFontSize(11).text(ele.correo, 151, posicionY);
+                         doc.line(18, posicionY + 3, 193, posicionY + 3, "F");
+                         posicionY = posicionY + 7;
+                });
+                 doc.line(18, 170, 18, posicionY - 7 + 3, "F");
+                 doc.line(193, 170, 193, posicionY - 7 + 3, "F");
+               doc.setFontSize(8).text("Pagina 1 de 1", 106, 295, "center")
 
-               const dataurl = doc.output("blob");
+              doc.output("pdfobjectnewwindow");
 
-               const archivo = new FormData();
-               archivo.append("dataHorario", dataurl, "horario.pdf")
-                archivo.append("titulo", dataHorario.titulo)
-                archivo.append("carrera", dataHorario.cod_carrera)
-                archivo.append("semestre", dataHorario.semestre);
+            //    const dataurl = doc.output("blob");
+
+            //    const archivo = new FormData();
+            //    archivo.append("dataHorario", dataurl, "horario.pdf")
+            //     archivo.append("titulo", dataHorario.titulo)
+            //     archivo.append("carrera", dataHorario.cod_carrera)
+            //     archivo.append("semestre", dataHorario.semestre);
             
-                axios.post(global + "sabehorario", archivo)
-                .then(res => console.log(res))
+            //     axios.post(global + "sabehorario", archivo)
+            //     .then(res => console.log(res))
                
             }) 
             
         };
 
         const setRegistrar = async () =>{
-            
-            const data = {
-                info: dataHorario,
-                horario: materiasHorario.value 
-            };
 
-            const res = await axios.post(global + "addhorario", data);
+            filtoMaterias();
+            
+            
+        //     const data = {
+        //         info: dataHorario,
+        //         horario: materiasHorario.value 
+        //     };
+
+        //     const res = await axios.post(global + "addhorario", data);
 
            await createPDF();
            
         };
+
+        const filtoMaterias = () =>{
+            for(const vistas of materiasHorario.value){
+                const siltro = profesoresVista.value.find(ele => ele.codigo == vistas.codigo)
+                if(!siltro){
+                    profesoresVista.value.push(vistas)
+                }
+                
+            } 
+        }
         
 
         return{
